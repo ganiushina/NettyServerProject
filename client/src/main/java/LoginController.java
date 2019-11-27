@@ -49,7 +49,7 @@ public class LoginController implements Initializable {
                             auth = true;
                         }
                         else {
-                            lbName.setText("Неверный логин или пароль!");
+                            updateLoginPass();
                         }
                     }
                 }
@@ -63,7 +63,6 @@ public class LoginController implements Initializable {
 
     public void updateScene(){
         updateUI(() -> {
-
             Parent root = null;
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("main.fxml"));
@@ -74,7 +73,14 @@ public class LoginController implements Initializable {
                 e.printStackTrace();
             }
         });
+    }
 
+    public void updateLoginPass(){
+        updateUI(() -> {
+            lbName.setText("Неверный логин или пароль!");
+            login.setText("");
+            password.setText("");
+        });
     }
 
     public static void updateUI(Runnable r) {

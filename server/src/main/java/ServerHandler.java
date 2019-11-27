@@ -61,7 +61,6 @@ public class ServerHandler extends ChannelInboundHandlerAdapter {
 
             if (msg instanceof AuthRequest) {
                 AuthRequest ar = (AuthRequest) msg;
-                AuthService.connect();
                 nickName = AuthService.getNickByLoginAndPass(ar.getLogin(), ar.getPassword());
                 if (nickName != null) {
                     ar.setNickName(nickName);
