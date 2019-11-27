@@ -12,7 +12,9 @@ public class Client extends Application {
 
     public void start(Stage primaryStage) throws Exception {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("main.fxml"));
+       // FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("main.fxml"));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Client.class.getResource("Login.fxml"));
         Parent p =  fxmlLoader.load();
 
         Scene scene = new Scene(p);

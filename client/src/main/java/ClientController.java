@@ -1,14 +1,9 @@
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -32,7 +27,6 @@ public class ClientController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Network.start();
         Thread t = new Thread(() -> {
             try {
                 while (true) {
@@ -47,17 +41,6 @@ public class ClientController implements Initializable {
                         List<String> filesName = flr.getFilenameList();
                         refreshRemoteFilesList(filesName);
                     }
-                    if (am instanceof AuthRequest) {
-                        AuthRequest fm = (AuthRequest) am;
-                        if (fm.isAuth()){
-                            loadFiles();
-                            refreshLocalFilesList();
-                        }
-                        else {
-                         //   updateScene();
-                        }
-                    }
-
                 }
             } catch (ClassNotFoundException | IOException e) {
                 e.printStackTrace();
@@ -68,24 +51,8 @@ public class ClientController implements Initializable {
         });
         t.setDaemon(true);
         t.start();
-        updateScene();
-    }
-
-    private void updateScene() {
-        updateUI(() -> {
-            try {
-                Stage stage = new Stage();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/Login.fxml"));
-                Parent root = loader.load();
-                LoginController lc = loader.getController();
-                stage.setTitle("Autorization Form");
-                stage.setScene(new Scene(root, 400, 200));
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
+        refreshLocalFilesList();
+        loadFiles();
     }
 
 
